@@ -37,7 +37,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@swc/core": "1.15.33",
-    "@swc/core-win32-x64-msvc": "1.15.33",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
