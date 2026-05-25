@@ -1,0 +1,53 @@
+{
+  "name": "schemesphere",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^6.39.3",
+    "@google/generative-ai": "^0.24.1",
+    "@prisma/client": "^6.8.2",
+    "@radix-ui/react-slot": "^1.2.3",
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.16.0",
+    "lucide-react": "^0.511.0",
+    "next": "15.5.18",
+    "next-intl": "^4.1.0",
+    "next-themes": "^0.4.6",
+    "openai": "^5.23.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typesense": "^2.0.3",
+    "zod": "^3.25.30"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@swc/core": "1.15.33",
+    "@swc/core-win32-x64-msvc": "1.15.33",
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "autoprefixer": "^10.4.21",
+    "csstype": "3.2.3",
+    "eslint": "^9.28.0",
+    "eslint-config-next": "15.5.18",
+    "postcss": "^8.5.4",
+    "prisma": "^6.8.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
+  }
+}

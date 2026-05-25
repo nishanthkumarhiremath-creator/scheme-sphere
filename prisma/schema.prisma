@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum SchemeSource {
+  MYSCHEME
+  AICTE
+  BUDDY4STUDY
+  STARTUP_INDIA
+}
+
+enum SchemeType {
+  GOVERNMENT
+  PRIVATE
+}
+
+enum Gender {
+  ANY
+  FEMALE
+  MALE
+  OTHER
+}
+
+enum SyncStatus {
+  SUCCESS
+  FAILED
+}
+
+model User {
+  id                 String              @id @default(uuid())
+  clerkId            String              @unique
+  email              String              @unique
+  name               String?
+  role               UserRole            @default(USER)
+  eligibilityProfile EligibilityProfile?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  @@index([role])
+}
+
+model Scheme {
+  id             String     @id @default(uuid())
+  slug           String     @unique
+  title          String
+  summary        String
+  description    String
+  benefits       String?
+  eligibility    Json
+  applicationUrl String?
+  officialLink   String
+  source         SchemeSource
+  sourceUrl      String
+  schemeType     SchemeType
+  states         String[]
+  categories     String[]
+  gender         Gender     @default(ANY)
+  minAge         Int?
+  maxAge         Int?
+  incomeLimit    Int?
+  educationLevel String?
+  occupation     String?
+  lastSynced     DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([source])
+  @@index([schemeType])
+  @@index([gender])
+}
+
+model Bookmark {
+  id        String   @id @default(uuid())
+  userId    String
+  schemeId  String
+  title     String
+  benefit   String
+  link      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, schemeId])
+  @@index([userId])
+}
+
+model Notification {
+  id          String    @id @default(uuid())
+  userId      String
+  fingerprint String
+  schemeId    String?
+  title       String
+  message     String
+  category    String
+  link        String?
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, fingerprint])
+  @@index([userId, readAt])
+  @@index([userId, createdAt])
+}
+
+model EligibilityProfile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  age            Int
+  gender         Gender
+  state          String
+  income         Int
+  category       String
+  occupation     String
+  educationLevel String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SyncLog {
+  id          String       @id @default(uuid())
+  source      SchemeSource
+  status      SyncStatus
+  recordsRead Int          @default(0)
+  recordsUpserted Int      @default(0)
+  message     String?
+  startedAt   DateTime     @default(now())
+  finishedAt  DateTime?
+
+  @@index([source])
+  @@index([status])
+}
+model UserProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique // This will match your Clerk user ID
+  age         Int?
+  gender      String?
+  category    String
+  occupation  String
+  state       String
+  incomeLimit String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
